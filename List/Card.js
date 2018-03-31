@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Animated,
   Text,
   View,
   Image
@@ -7,30 +8,28 @@ import {
 
 export default class App extends Component {
   render() {
-    const { active, color, logo, left, height, width, title, amount, updated } = this.props;
+    const { color, logo, left, scale, height, width, title, amount, updated } = this.props;
     const containerStyles = {
       ...styles.container,
       backgroundColor: color,
       marginHorizontal: 5,
-      left,
       height,
-      width
+      width,
+      transform: [{scale}]
     };
-    const logoStyles = active ? styles.logoActive : styles.logo;
-    const titleStyles = active ? styles.titleActive : styles.title;
-    const amountStyles = active ? styles.amountActive : styles.amount;
-    const updatedStyles = active ? styles.updatedActive : styles.updated;
-
-    console.log(this.props);
+    const logoStyles = {...styles.logo, transform: [{scale}]};
+    const titleStyles = {...styles.title, transform: [{scale}]};
+    const amountStyles = {...styles.amount, transform: [{scale}]};
+    const updatedStyles = {...styles.updated, transform: [{scale}]};
     return (
-      <View style={containerStyles}>
-        <View style={styles.logoContainer}>
-          <Image style={logoStyles} source={logo} />
-        </View>
-        <Text style={titleStyles}>{title.toUpperCase()}</Text>
-        <Text style={amountStyles}>{amount}</Text>
-        <Text style={updatedStyles}>Updated {updated} min ago</Text>
-      </View>
+      <Animated.View style={containerStyles}>
+        <Animated.View style={styles.logoContainer}>
+          <Animated.Image style={logoStyles} source={logo} />
+        </Animated.View>
+        <Animated.Text style={titleStyles}>{title.toUpperCase()}</Animated.Text>
+        <Animated.Text style={amountStyles}>{amount}</Animated.Text>
+        <Animated.Text style={updatedStyles}>Updated {updated} min ago</Animated.Text>
+      </Animated.View>
     );
   }
 }
@@ -46,11 +45,6 @@ const styles = {
     alignItems: 'flex-end'
   },
   logo: {
-    height: 20,
-    width: 20,
-    resizeMode: 'contain',
-  },
-  logoActive: {
     height: 25,
     width: 25,
     resizeMode: 'contain',
@@ -58,31 +52,15 @@ const styles = {
   title: {
     color: '#fff',
     fontSize: 8,
-    marginTop: '5%'
-  },
-  titleActive: {
-    color: '#fff',
-    fontSize: 8,
     marginTop: '8%'
   },
   amount: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: '1%'
-  },
-  amountActive: {
     color: '#fff',
     fontSize: 25,
     fontWeight: 'bold',
     marginTop: '1%'
   },
   updated: {
-    color: '#fff',
-    fontSize: 6,
-    marginTop: '10%'
-  },
-  updatedActive: {
     color: '#fff',
     fontSize: 8,
     marginTop: '14%'
